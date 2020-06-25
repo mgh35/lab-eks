@@ -89,7 +89,6 @@ it is the responsibility of the developer to maintain that.
 A Pod itself is ephemeral - if it crashes, it won't be recreated. Higher-level abstractions handle that persistence. To
 be able to create instances of Pods, they can use a PodTemplate.
 
-
 #### Controllers
 
 These manage the lifecycle of a service. Details [here](https://kubernetes.io/docs/concepts/workloads/controllers/).
@@ -100,8 +99,50 @@ Examples:
 - Job: Manage a workflow that should run once, with handling of failures.
 - CronJob: Manage a job that should run on a given schedule
 
+#### Service
+
+A [Service](https://kubernetes.io/docs/concepts/services-networking/service/) is an abstraction around an 
+interchangeable collection of Pods that adds support for things like discovery and load-balancing.
 
 
+#### Ingress
+
+An [Ingress](https://kubernetes.io/docs/concepts/services-networking/ingress/) manages access to Services in the cluster
+from outside the cluster.
+
+#### Volume
+
+A [Volume](https://kubernetes.io/docs/concepts/storage/volumes/) is an abstraction around storage. 
+
+More than the "Volume" in Docker, a Kubernetes Volume includes a lifetime which can exceed that of the containers.
+
+There are a number of backends that can host the storage. And there is a concept of 
+[PersistentVolume](https://kubernetes.io/docs/concepts/storage/persistent-volumes/) where required.
+
+#### ConfigMap
+
+A [ConfigMap](https://kubernetes.io/docs/concepts/configuration/configmap/) is a key-value store for non-sensitive 
+configuration information.
+
+This can be used, eg, in other object Specs (which manages the appropriate triggers on changes), like:
+
+```yaml
+...
+      env:
+        # Define the environment variable
+        - name: PLAYER_INITIAL_LIVES # Notice that the case is different here
+                                     # from the key name in the ConfigMap.
+          valueFrom:
+            configMapKeyRef:
+              name: game-demo           # The ConfigMap this value comes from.
+              key: player_initial_lives # The key to fetch.
+...
+```
+
+#### Secret
+
+[Secrets](https://kubernetes.io/docs/concepts/configuration/secret/) are a mechanism to manage sensitive data (eg 
+passwords) in the cluster.
 
 ## EKS
 
@@ -113,6 +154,8 @@ Examples:
 ### Kubernetes
 
 https://kubernetes.io/
+
+https://kubernetes.io/blog/2015/10/some-things-you-didnt-know-about-kubectl_28/
 
 ### EKS
 

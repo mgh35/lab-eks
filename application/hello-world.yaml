@@ -1,0 +1,34 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: hello-world
+spec:
+  selector:
+    matchLabels:
+      run: lab-eks
+  replicas: 2
+  template:
+    metadata:
+      labels:
+        run: lab-eks
+    spec:
+      containers:
+        - name: hello-world
+          image: hashicorp/http-echo
+          command: ['/http-echo', '-text="Hello, world!"']
+          ports:
+            - containerPort: 5678
+              protocol: TCP
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: hello-world
+spec:
+  ports:
+    - name: http-port
+      port: 5678
+      targetPort: http-port
+      protocol: TCP
+  selector:
+    app: hello-world
