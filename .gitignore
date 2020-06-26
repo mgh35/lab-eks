@@ -1,2 +1,6 @@
 # IDE
 .idea/
+
+# Python artifacts
+.python-version
+.venv/
