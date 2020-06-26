@@ -26,9 +26,7 @@ metadata:
   name: hello-world
 spec:
   ports:
-    - name: http-port
-      port: 5678
-      targetPort: http-port
+    - port: 5678
       protocol: TCP
   selector:
     app: hello-world
