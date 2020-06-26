@@ -3,4 +3,11 @@
 set -e
 cd "$(dirname "$0")"
 
-docker build . --tag hello-world
+read "TAG?Tag: "
+NAME="mgh35/hello-world:$TAG"
+
+printf "Building image: $NAME"
+docker build --tag $NAME .
+
+docker login
+docker push $NAME

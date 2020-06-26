@@ -104,11 +104,22 @@ Examples:
 A [Service](https://kubernetes.io/docs/concepts/services-networking/service/) is an abstraction around an 
 interchangeable collection of Pods that adds support for things like discovery and load-balancing.
 
+There are 3 types of Service Type:
+
+- ClusterIP: Only visible within the cluster.
+- NodePort: Exposes a port (in the range 30000–32767) on every Node in the cluster. Mainly debugging tool.
+- LoadBalancer: A load balancer for the Service will be created.
 
 #### Ingress
 
 An [Ingress](https://kubernetes.io/docs/concepts/services-networking/ingress/) manages access to Services in the cluster
-from outside the cluster.
+from outside the cluster. It is a separate Service that can route traffic to multiple different services.
+
+This [solves](https://itnext.io/kubernetes-clusterip-vs-nodeport-vs-loadbalancer-services-and-ingress-an-overview-with-722a07f3cfe1) 
+a number of limitations of the LoadBalancer Services:
+- A single IP can route to multiple services
+- No need to run & pay for multiple load balancers
+- Level 7 routing
 
 #### Volume
 
@@ -144,6 +155,11 @@ This can be used, eg, in other object Specs (which manages the appropriate trigg
 [Secrets](https://kubernetes.io/docs/concepts/configuration/secret/) are a mechanism to manage sensitive data (eg 
 passwords) in the cluster.
 
+### Notes
+
+- Kubernetes doesn't (necessarily) use the Docker daemon of the system Docker instance.
+    - With minikube, eg, you can use minikube's Docker daemon with `eval $(minikube docker-env)`
+
 ## EKS
 
 
@@ -156,6 +172,14 @@ passwords) in the cluster.
 https://kubernetes.io/
 
 https://kubernetes.io/blog/2015/10/some-things-you-didnt-know-about-kubectl_28/
+
+https://kubernetes.io/docs/reference/kubectl/cheatsheet/
+
+### Ingress
+
+https://medium.com/google-cloud/kubernetes-nodeport-vs-loadbalancer-vs-ingress-when-should-i-use-what-922f010849e0
+
+https://itnext.io/kubernetes-clusterip-vs-nodeport-vs-loadbalancer-services-and-ingress-an-overview-with-722a07f3cfe1
 
 ### EKS
 
