@@ -6,7 +6,7 @@ spec:
   selector:
     matchLabels:
       run: hello-world
-  replicas: 2
+  replicas: 1
   template:
     metadata:
       labels:
@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
         - name: hello-world
-          image: mgh35/hello-world:0.1.0
+          image: mgh35/hello-world:0.1.1
           ports:
             - containerPort: 5000
 ---
@@ -29,6 +29,40 @@ spec:
   selector:
     run: hello-world
 ---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: hello-nemesis
+spec:
+  selector:
+    matchLabels:
+      run: hello-nemesis
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        run: hello-nemesis
+    spec:
+      containers:
+        - name: hello-nemesis
+          image: mgh35/hello-world:0.1.1
+          env:
+            - name: HELLO_TARGET
+              value: nemesis
+          ports:
+            - containerPort: 5000
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: hello-nemesis
+spec:
+  type: ClusterIP
+  ports:
+    - port: 5000
+  selector:
+    run: hello-nemesis
+---
 apiVersion: networking.k8s.io/v1beta1 # for versions before 1.14 use extensions/v1beta1
 kind: Ingress
 metadata:
@@ -42,4 +76,8 @@ spec:
      - path: /world
        backend:
          serviceName: hello-world
+         servicePort: 5000
+     - path: /nemesis
+       backend:
+         serviceName: hello-nemesis
          servicePort: 5000
