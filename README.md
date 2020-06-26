@@ -159,6 +159,11 @@ passwords) in the cluster.
 
 - Kubernetes doesn't (necessarily) use the Docker daemon of the system Docker instance.
     - With minikube, eg, you can use minikube's Docker daemon with `eval $(minikube docker-env)`
+- Per [here](https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.18/#service-v1-core), the Service.selector 
+    matches on key-value Label pairs.
+- See system services with: `kubectl get pods -n kube-system`
+- [Add ingress](https://kubernetes.io/docs/tasks/access-application-cluster/ingress-minikube/) to minikube with addon: 
+    `minikube addons enable ingress`
 
 ## EKS
 
