@@ -28,3 +28,18 @@ spec:
     - port: 5000
   selector:
     run: hello-world
+---
+apiVersion: networking.k8s.io/v1beta1 # for versions before 1.14 use extensions/v1beta1
+kind: Ingress
+metadata:
+ name: ingress
+ annotations:
+   nginx.ingress.kubernetes.io/rewrite-target: /$1
+spec:
+ rules:
+ - http:
+     paths:
+     - path: /world
+       backend:
+         serviceName: hello-world
+         servicePort: 5000
