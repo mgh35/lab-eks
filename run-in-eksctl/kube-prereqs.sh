@@ -5,3 +5,6 @@ sudo installer -pkg AWSCLIV2.pkg -target /
 
 brew tap weaveworks/tap
 brew install weaveworks/tap/eksctl
+
+
+read

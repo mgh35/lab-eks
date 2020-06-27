@@ -167,8 +167,42 @@ passwords) in the cluster.
 
 ## EKS
 
+Elastic Kubernetes Service (EKS) is Amazon's managed Kubernetes services. 
 
+It provides a working and up-to-date Control Plane implementation on top of AWS services, with a few options for Worker 
+Nodes. Once up, it can be connected to with kubectl as usual.
 
+### Components
+
+#### Network
+
+The kubernetes' cluster network in EKS is implemented via AWS VPCs. One managed VPC is setup for the control plane and
+another VPC is setup for the Worker Nodes.
+
+There are a [variety](https://aws.amazon.com/blogs/containers/de-mystifying-cluster-networking-for-amazon-eks-worker-nodes/)
+of ways to configure this depending on how you want the network to be. Particularly, there are options to keep these 
+either public or private.
+
+#### Worker Nodes
+
+Worker nodes can be run on:
+- EC2 instances
+- [AWS Fargate](https://docs.aws.amazon.com/eks/latest/userguide/fargate.html) (a serverless container execution service)
+
+### Setup
+
+Per [here](https://docs.aws.amazon.com/eks/latest/userguide/getting-started.html), the recommended ways to setup an EKS
+instance are:
+- AWS Console
+- `eksctl` CLI
+
+Using `eksctl`, it creates the components in a CloudFormation template. So you can use the CloudFormation console to see
+the stack and its current state.
+
+When [deleting](https://aws.amazon.com/premiumsupport/knowledge-center/eks-delete-cluster-issues/) the cluster, you want
+to use the same tool used to create it to make sure it deletes the right pieces in the right order. With `eksctl`, it 
+seems that since it builds itself in CloudFormation it's possible to handle the deletion through CloudFormation as well 
+if there are problems using `eksctl` itself.
 
 ## References
 
@@ -179,8 +213,6 @@ https://kubernetes.io/
 https://kubernetes.io/blog/2015/10/some-things-you-didnt-know-about-kubectl_28/
 
 https://kubernetes.io/docs/reference/kubectl/cheatsheet/
-
-### Ingress
 
 https://medium.com/google-cloud/kubernetes-nodeport-vs-loadbalancer-vs-ingress-when-should-i-use-what-922f010849e0
 
@@ -193,6 +225,14 @@ https://docs.aws.amazon.com/eks/latest/userguide/getting-started.html
 https://www.weave.works/technologies/kubernetes-on-aws/
 
 https://aws.amazon.com/fargate/
+
+https://aws.amazon.com/about-aws/whats-new/2020/05/introducing-amazon-eks-best-practices-guide-for-security/
+
+https://aws.amazon.com/premiumsupport/knowledge-center/eks-delete-cluster-issues/
+
+https://aws.amazon.com/blogs/containers/de-mystifying-cluster-networking-for-amazon-eks-worker-nodes/
+
+https://docs.aws.amazon.com/eks/latest/userguide/alb-ingress.html
 
 ### EKS with Terraform
 
