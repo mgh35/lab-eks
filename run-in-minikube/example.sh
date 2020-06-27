@@ -3,7 +3,7 @@
 set -e
 cd "$(dirname "$0")"
 
-DIR=../cluster/
+DIR=cluster/
 
 kubectl apply -f $DIR
 
