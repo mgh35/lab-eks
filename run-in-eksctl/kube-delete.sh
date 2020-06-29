@@ -9,7 +9,7 @@ kubectl delete -f cluster/
 
 eksctl delete fargateprofile \
   --cluster $CLUSTER \
-  --name hello-world
+  --name hello
 
 kubectl delete -f cluster-setup/
 
