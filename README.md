@@ -204,6 +204,11 @@ to use the same tool used to create it to make sure it deletes the right pieces 
 seems that since it builds itself in CloudFormation it's possible to handle the deletion through CloudFormation as well 
 if there are problems using `eksctl` itself.
 
+### Notes
+
+- Using ALB with Fargate requires [ALB version > 1.1.4](https://github.com/kubernetes-sigs/aws-alb-ingress-controller/issues/1097)
+- Using ALB with `eksctl` has [issues if ALB > 1.1.6 but `eksctl` older](https://github.com/weaveworks/eksctl/pull/2068)
+
 ## References
 
 ### Kubernetes
@@ -233,6 +238,8 @@ https://aws.amazon.com/premiumsupport/knowledge-center/eks-delete-cluster-issues
 https://aws.amazon.com/blogs/containers/de-mystifying-cluster-networking-for-amazon-eks-worker-nodes/
 
 https://docs.aws.amazon.com/eks/latest/userguide/alb-ingress.html
+
+https://aws.amazon.com/blogs/containers/using-alb-ingress-controller-with-amazon-eks-on-fargate/
 
 ### EKS with Terraform
 
