@@ -206,8 +206,15 @@ if there are problems using `eksctl` itself.
 
 ### Notes
 
-- Using ALB with Fargate requires [ALB version > 1.1.4](https://github.com/kubernetes-sigs/aws-alb-ingress-controller/issues/1097)
-- Using ALB with `eksctl` has [issues if ALB > 1.1.6 but `eksctl` older](https://github.com/weaveworks/eksctl/pull/2068)
+- Using ALB with Fargate requires [ALB version > 1.1.4](https://github.com/kubernetes-sigs/aws-alb-ingress-controller/issues/1097).
+- Using ALB with `eksctl` has [issues if ALB > 1.1.6 but `eksctl` older](https://github.com/weaveworks/eksctl/pull/2068).
+- Make sure to use the ingress controller configs for the relevant ALB version (as the required perms, eg, have changed).
+- When using Fargate, make sure to use [ip mode](https://aws.amazon.com/blogs/opensource/kubernetes-ingress-aws-alb-ingress-controller/)
+    for the target type. This requires the services to have the `alb.ingress.kubernetes.io/target-type` annotation.
+- Health checks are configured via the [livenessProbe](https://kubernetes.io/docs/tasks/configure-pod-container/configure-liveness-readiness-startup-probes/#define-a-liveness-http-request)
+    on the Pod spec.
+
+
 
 ## References
 
@@ -237,9 +244,13 @@ https://aws.amazon.com/premiumsupport/knowledge-center/eks-delete-cluster-issues
 
 https://aws.amazon.com/blogs/containers/de-mystifying-cluster-networking-for-amazon-eks-worker-nodes/
 
+### EKS ALB
+
 https://docs.aws.amazon.com/eks/latest/userguide/alb-ingress.html
 
 https://aws.amazon.com/blogs/containers/using-alb-ingress-controller-with-amazon-eks-on-fargate/
+
+https://aws.amazon.com/blogs/opensource/kubernetes-ingress-aws-alb-ingress-controller/
 
 ### EKS with Terraform
 
