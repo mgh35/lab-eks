@@ -155,6 +155,14 @@ This can be used, eg, in other object Specs (which manages the appropriate trigg
 [Secrets](https://kubernetes.io/docs/concepts/configuration/secret/) are a mechanism to manage sensitive data (eg 
 passwords) in the cluster.
 
+
+### Config
+
+You can [configure kubectl](https://kubernetes.io/docs/tasks/access-application-cluster/configure-access-multiple-clusters/)
+to authorize against your cluster. The default is in `~/.kube/config`, but you can also specify the `--kubeconfig` flag 
+or put it in the env variable `KUBECONFIG` (which accepts multiple files, separated by `:` which will be merged).
+
+
 ### Notes
 
 - Kubernetes doesn't (necessarily) use the Docker daemon of the system Docker instance.
@@ -215,6 +223,18 @@ if there are problems using `eksctl` itself.
     on the Pod spec.
 
 
+## EKS with Terraform
+
+### Notes
+
+- Terraform also has a [`kubernetes` provider](https://www.terraform.io/docs/providers/kubernetes/#stacking-with-managed-kubernetes-cluster-resources)
+    , which allows for kubernetes resources to be managed through Terraform. This is separate from the providers for 
+    setting up the cluster in EKS (or other managed services).
+- I ran into errors running the [HashiCorp EKS demo](https://github.com/hashicorp/learn-terraform-provision-eks-cluster) 
+    that sounded related to [this](https://discuss.hashicorp.com/t/kubernetes-provider-error-when-using-aws-eks-as-a-submodule/9199).
+    I wasn't able to resolve the issue, but running the [AWS demo](https://aws.amazon.com/blogs/startups/from-zero-to-eks-with-terraform-and-helm/) 
+    just worked. Seems related somehow to the `kubernetes` provider auth.
+
 
 ## References
 
@@ -260,3 +280,4 @@ https://learn.hashicorp.com/terraform/kubernetes/provision-eks-cluster
 
 https://github.com/hashicorp/learn-terraform-provision-eks-cluster
 
+https://discuss.hashicorp.com/t/kubernetes-provider-error-when-using-aws-eks-as-a-submodule/9199

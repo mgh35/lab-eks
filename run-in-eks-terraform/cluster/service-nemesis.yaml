@@ -1,0 +1,41 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: nemesis
+  namespace: hello
+spec:
+  selector:
+    matchLabels:
+      app: nemesis
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: nemesis
+    spec:
+      containers:
+        - name: nemesis
+          image: mgh35/hello-world:0.1.2
+          env:
+            - name: HELLO_TARGET
+              value: nemesis
+          ports:
+            - containerPort: 5000
+          livenessProbe:
+            httpGet:
+              path: /healthz
+              port: 5000
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: nemesis
+  namespace: hello
+  annotations:
+    alb.ingress.kubernetes.io/target-type: ip
+spec:
+  type: NodePort
+  ports:
+    - port: 5000
+  selector:
+    app: nemesis

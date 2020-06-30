@@ -1,0 +1,7 @@
+# Terraform artifacts
+.terraform/
+*.tfstate
+*.tfstate.*
+
+# Kube artifacts
+.kubeconfig
